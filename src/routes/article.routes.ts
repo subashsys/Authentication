@@ -6,7 +6,7 @@ import { validate } from "../middleware/validate.middleware";
 const router = Router()
 
 router.get("/",getTodo)
-router.post("/:id",validate(createArticleSchema))
+router.post("/",validate(createArticleSchema),)
 
 
 
