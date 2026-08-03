@@ -1,13 +1,15 @@
 import Router from "express";
-import { getTodo } from "../controller/article.controller";
-import { createArticleSchema } from "../validations/article.validation";
+import {  createArticle, deleteArticle, getArticle, updateArticle, } from "../controller/article.controller";
+import { createArticleSchema, delteArticleSchema, updateArticleSchema } from "../validations/article.validation";
 import { validate } from "../middleware/validate.middleware";
 
 const router = Router()
 
-router.get("/",getTodo)
-router.post("/",validate(createArticleSchema),)
+router.get("/",getArticle)
+router.post("/",validate(createArticleSchema),createArticle)
+router.put("/:id",validate(updateArticleSchema),updateArticle)
+router.delete("/:id",validate(delteArticleSchema),deleteArticle)
 
 
-
+   
 export default router
