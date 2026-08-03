@@ -13,8 +13,6 @@ export const getTodo=async(req:Request,res:Response,next:NextFunction)=>{
        
     }
    catch(error: any){
-    console.log("CODE:", error.code)
-    console.log("MESSAGE:", error.message)
     next(error)
 }
 

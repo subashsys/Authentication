@@ -9,7 +9,7 @@ export const validate=
         query:req.query
     }) 
     if (!result.success){
-        res.status(400).json({
+        return res.status(400).json({
             success:false,
             message:"Validation failed",
             error:result.error.issues
