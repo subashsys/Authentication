@@ -20,9 +20,9 @@ export const getArticle=async(req:Request,res:Response,next:NextFunction)=>{
 export const createArticle= async(req:Request, res:Response, next:NextFunction)=>{
     try{
         const {title, description}=req.body
-        const article= await articleService.createArticles(title,description)
+        const article= await articleService.createArticles(title,description, req.user!.id)
         res.status(201).json({
-            result:success,
+            success:true,
             message:"Article created successfully",
             article
         })
@@ -36,9 +36,9 @@ export const updateArticle=async(req:Request, res:Response, next:NextFunction)=>
     try{
         const id = Number(req.params.id);
         const {title, description}=req.body
-        const article = await articleService.updateArticles(id, title, description)
+        const article = await articleService.updateArticles(id, title, description,req.user!.id)
         res.status(200).json({
-            result:success,
+            success:true,
             message:"Article upfated succesffully",
             article
         })
@@ -51,9 +51,9 @@ export const updateArticle=async(req:Request, res:Response, next:NextFunction)=>
 export const deleteArticle=async(req:Request, res:Response, next:NextFunction)=>{
     try{
         const id =Number(req.params.id)
-        await articleService.deleteArticles(id)
+        await articleService.deleteArticles(id,req.user!.id)
         res.status(200).json({
-            result:success,
+            success:true,
             message:"Article deleted successfully"
         })
     }

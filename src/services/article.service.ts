@@ -5,11 +5,12 @@ export const getArticles = async()=>{
 }
 
 
-export  const createArticles= async(title:string, description:string)=>{
+export  const createArticles= async(title:string, description:string, userId:number)=>{
     const article= await prisma.article.create({
         data:{
             title,
-            description
+            description,
+            userId
 
         }
     })
@@ -17,10 +18,11 @@ export  const createArticles= async(title:string, description:string)=>{
  }
 
 
-export const updateArticles=async(id:number,title:string, description:string)=>{
-    const article = await prisma.article.findUnique({
+export const updateArticles=async(id:number,title:string, description:string,userId:number)=>{
+    const article = await prisma.article.findFirst({
         where:{
             id,
+            userId
         }
      })
      if(!article){
@@ -43,10 +45,11 @@ export const updateArticles=async(id:number,title:string, description:string)=>{
  }
 
 
-export const deleteArticles= async(id:number)=>{
+export const deleteArticles= async(id:number,userId:number)=>{
     const article = await prisma.article.findUnique({
         where:{
-            id
+            id,
+            userId
         }
     })
     if(!article){
