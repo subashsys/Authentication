@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import * as authService from "../services/auth.service";
+import { success } from "zod";
 
 export const registerUser = async (
   req: Request,
@@ -55,6 +56,7 @@ export const loginUser = async (
     next(error);
   }
 };
+
 export const refreshToken = async (
   req: Request,
   res: Response,
@@ -87,3 +89,25 @@ export const refreshToken = async (
     next(error);
   }
 };
+
+export const changePassword = async(req:Request, res:Response, next:NextFunction )=>{
+
+ try{
+  const userId= req.user!.id
+  const {currentPassword, changePassword} =req.body
+
+  const passwordchange = await authService.passwordChanger(userId,currentPassword,changePassword)
+
+  res.status(200).json({
+    success:true,
+    message:"Password changed successfullt"
+  })
+
+
+
+
+ }
+  catch(error){
+    next(error)
+  }
+}

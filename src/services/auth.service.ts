@@ -203,6 +203,54 @@ await prisma.refreshToken.create({
 return {
   accessToken,
   refreshToken: newRefreshToken,
+};
+};
+ 
+export const passwordChanger= async(userId:number,currentPassword:string, changePassword:string)=>{
 
-};
-};
+  const existingUser= await prisma.user.findUnique({
+    where:{
+      id:userId
+    },
+    select:{
+      password:true
+    }
+  })
+  if (!existingUser){
+    throw{
+      statusCode:404,
+      message:"User do not exist"
+    }
+  }
+  
+  const comparePassword = await bcrypt.compare(currentPassword,existingUser.password)
+
+  if (!comparePassword){
+    throw {
+      statusCode:404,
+      message:"Invalid input"
+    }
+  }
+  const hashchangePassword= await bcrypt.hash(changePassword,10)
+
+  await prisma.user.update({
+    where:{
+      id:userId,
+    },
+    data:{
+      password:hashchangePassword
+    }
+  })
+  await prisma.refreshToken.deleteMany({
+  where: {
+    userId,
+  },
+});
+
+  return(
+    {
+      message:"Password changes successfully"
+    }
+  )
+
+}

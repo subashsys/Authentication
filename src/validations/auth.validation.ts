@@ -14,3 +14,10 @@ export const loginSchema=z.object({
         password: z.string().min(1,"Passowrd is required").max(21,"Password is too long")
     })
 })
+
+export const changePasswordSchema= z.object({
+    body:z.object({
+        currentPassword:z.string(),
+        changePassword:z.string()
+    })
+})
