@@ -27,3 +27,17 @@ export const forgotPasswordSchema= z.object({
         email:z.string().trim().toLowerCase().email("Invalid email"),
     })
 })
+
+export const verifyOTPSchema = z.object({
+  body: z.object({
+    email: z.string().trim().toLowerCase().email("Invalid email"),
+    otp: z.string().length(6, "OTP must be 6 digits"),
+  }),
+});
+
+export const resetPasswordSchema = z.object({
+  body: z.object({
+    resetToken: z.string().min(1, "Reset token is required"),
+    newPassword: z.string().min(8, "Password must be at least 8 characters").max(20, "Password is too long"),
+    }),
+});
