@@ -30,6 +30,7 @@ model User {
   updatedAt DateTime @updatedAt
   articles  Article[]
   refreshTokens RefreshToken[]
+  passwordResetOTPs PasswordResetOTP[]
 }
 model RefreshToken {
   id        Int      @id @default(autoincrement())
@@ -40,3 +41,17 @@ model RefreshToken {
 
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model PasswordResetOTP {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  otpHash   String
+  expiresAt DateTime
+  attempts  Int      @default(0)
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}                         
