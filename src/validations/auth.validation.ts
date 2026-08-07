@@ -21,3 +21,9 @@ export const changePasswordSchema= z.object({
         changePassword:z.string()
     })
 })
+
+export const forgotPasswordSchema= z.object({
+    body:z.object({
+        email:z.string().trim().toLowerCase().email("Invalid email"),
+    })
+})
